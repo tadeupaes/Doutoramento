@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental Interativo: IA e Comunicação Humana</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0a0f1d',
+                        cardbg: '#111827',
+                        accentglow: '#6366f1'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.3);
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 30px 0 rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
+        }
+        .node-line {
+            background: linear-gradient(to bottom, #6366f1, #a855f7);
+        }
+        /* Animações suaves de abertura */
+        .collapsible-content {
+            max-height: 2000px;
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            opacity: 1;
+            overflow: hidden;
+        }
+        .collapsible-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <!-- Cabeçalho Imersivo -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 px-6 py-4 shadow-xl">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-tr from-indigo-600 to-violet-600 p-3 rounded-2xl text-white shadow-lg shadow-indigo-500/40 animate-pulse">
+                    <i class="fa-solid fa-brain text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-extrabold tracking-tight text-white bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
+                        IA e Comunicação Humana: Mitid e Silêncio Epistêmico
+                    </h1>
+                    <p class="text-xs text-indigo-300/80 font-medium">✨ Mapa Mental Interativo para Alunos • Clique nos botões <strong>[+]</strong> para explorar</p>
+                </div>
+            </div>
+
+            <!-- Controles Globais -->
+            <div class="flex items-center gap-3">
+                <button onclick="expandAll()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl shadow-md transition flex items-center gap-2">
+                    <i class="fa-solid fa-expand"></i> Expandir Tudo
+                </button>
+                <button onclick="collapseAll()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl border border-slate-700 transition flex items-center gap-2">
+                    <i class="fa-solid fa-compress"></i> Recolher Tudo
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal do Mapa Mental -->
+    <main class="flex-1 max-w-7xl mx-auto w-full p-6 md:p-10 flex flex-col items-center">
+        
+        <!-- Nó Central (Raiz) -->
+        <div class="w-full max-w-2xl mb-12">
+            <div class="glow-effect bg-gradient-to-r from-indigo-900/90 via-purple-900/90 to-slate-900 border-2 border-indigo-500/50 p-6 rounded-3xl text-center shadow-2xl relative cursor-pointer group" onclick="toggleNode('central-info')">
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-indigo-100 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
+                    Núcleo Central de Aprendizagem
+                </div>
+                <h2 class="text-xl md:text-2xl font-black text-white mt-2 group-hover:text-indigo-200 transition">
+                    A Convergência entre Inteligência Artificial e Comunicação Humana
+                </h2>
+                <p id="central-info" class="text-sm text-slate-300 mt-3 font-normal leading-relaxed">
+                    Explore os dois grandes ramos conceituais gerados a partir do seu NotebookLM: o <strong>Modelo MITID</strong> e o <strong>Silêncio de Comunicação Mediado por IA</strong>. Clique nos ramos abaixo para destrinchar cada conceito de forma interativa.
+                </p>
+                <div class="mt-4 flex justify-center items-center gap-2 text-xs text-indigo-400 font-semibold">
+                    <span>Clique para recolher/expandir</span>
+                    <i class="fa-solid fa-chevron-up text-xs" id="icon-central-info"></i>
+                </div>
+            </div>
+            <!-- Linha Conectora Central -->
+            <div class="w-1 h-12 node-line mx-auto"></div>
+        </div>
+
+        <!-- Grade de Ramos Principais -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full items-start">
+            
+            <!-- ================= RAMO 1: MODELO MITID ================= -->
+            <div class="bg-cardbg/90 border border-slate-800 rounded-3xl p-6 shadow-2xl backdrop-blur-sm glow-hover transition-all duration-300">
+                
+                <!-- Cabeçalho do Ramo 1 -->
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-black text-base shadow-inner">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-blue-400 tracking-wider">Ramo Principal 01</span>
+                            <h3 class="font-extrabold text-base md:text-lg text-white">Modelo MITID</h3>
+                        </div>
+                    </div>
+                    <!-- Botão de Ação [+] -->
+                    <button onclick="toggleSection('branch-1')" id="btn-branch-1" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-blue-600 hover:text-white text-blue-400 font-bold flex items-center justify-center transition shadow-md border border-slate-700">
+                        <i class="fa-solid fa-minus" id="icon-btn-branch-1"></i>
+                    </button>
+                </div>
+
+                <!-- Conteúdo Expansível Ramo 1 -->
+                <div id="branch-1" class="collapsible-content space-y-4 pt-4">
+                    
+                    <!-- Sub-nó A -->
+                    <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition group">
+                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleSubNode('sub-1-1')">
+                            <h4 class="text-sm font-bold text-blue-300 flex items-center gap-2">
+                                <i class="fa-solid fa-diagram-project text-xs text-blue-400"></i> Papéis Duplos da IA
+                            </h4>
+                            <span class="text-xs text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-lg group-hover:bg-blue-500 group-hover:text-white transition">+ Detalhes</span>
+                        </div>
+                        <div id="sub-1-1" class="collapsible-content collapsed mt-3 text-xs text-slate-300 space-y-2 pl-4 border-l-2 border-blue-500/50">
+                            <p>• <strong>Parceiros Dialógicos:</strong> Interação direta humano-IA, emulação da mente, persistência e mirmecoplastia.</p>
+                            <p>• <strong>Mediador Dialógico:</strong> Interação mediada entre humanos, IA media a reformulação e operação invisível dos bastidores.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sub-nó B -->
+                    <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition group">
+                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleSubNode('sub-1-2')">
+                            <h4 class="text-sm font-bold text-blue-300 flex items-center gap-2">
+                                <i class="fa-solid fa-gears text-xs text-blue-400"></i> Fundamentos Técnicos
+                            </h4>
+                            <span class="text-xs text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-lg group-hover:bg-blue-500 group-hover:text-white transition">+ Detalhes</span>
+                        </div>
+                        <div id="sub-1-2" class="collapsible-content collapsed mt-3 text-xs text-slate-300 space-y-2 pl-4 border-l-2 border-blue-500/50">
+                            <p>• <strong>Tensão do Apego:</strong> Busca por segurança relacional na interação.</p>
+                            <p>• <strong>Tensão do Dever Social:</strong> Crenças e aceitação de benefícios coletivos.</p>
+                            <p>• <strong>Confiança Epistêmica:</strong> Avaliação crítica de credibilidade e veracidade.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sub-nó C -->
+                    <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition group">
+                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleSubNode('sub-1-3')">
+                            <h4 class="text-sm font-bold text-blue-300 flex items-center gap-2">
+                                <i class="fa-solid fa-sitemap text-xs text-blue-400"></i> Arquitetura e Mecanismos
+                            </h4>
+                            <span class="text-xs text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-lg group-hover:bg-blue-500 group-hover:text-white transition">+ Detalhes</span>
+                        </div>
+                        <div id="sub-1-3" class="collapsible-content collapsed mt-3 text-xs text-slate-300 space-y-2 pl-4 border-l-2 border-blue-500/50">
+                            <p>• Antecedentes de simulação e ecossistemas sistêmicos.</p>
+                            <p>• Ações conjuntas e a nova linguagem mental colaborativa.</p>
+                            <p>• Reciprocidade linguística e produtividade textual.</p>
+                            <p>• Fatores moderadores baseados em personalidade e cultura.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ================= RAMO 2: SILÊNCIO MC ================= -->
+            <div class="bg-cardbg/90 border border-slate-800 rounded-3xl p-6 shadow-2xl backdrop-blur-sm glow-hover transition-all duration-300">
+                
+                <!-- Cabeçalho do Ramo 2 -->
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-black text-base shadow-inner">
+                            <i class="fa-solid fa-comment-slash"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-purple-400 tracking-wider">Ramo Principal 02</span>
+                            <h3 class="font-extrabold text-base md:text-lg text-white">Silêncio de Comunicação (MC)</h3>
+                        </div>
+                    </div>
+                    <!-- Botão de Ação [+] -->
+                    <button onclick="toggleSection('branch-2')" id="btn-branch-2" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-purple-600 hover:text-white text-purple-400 font-bold flex items-center justify-center transition shadow-md border border-slate-700">
+                        <i class="fa-solid fa-minus" id="icon-btn-branch-2"></i>
+                    </button>
+                </div>
+
+                <!-- Conteúdo Expansível Ramo 2 -->
+                <div id="branch-2" class="collapsible-content space-y-4 pt-4">
+                    
+                    <!-- Sub-nó A -->
+                    <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 hover:border-purple-500/40 transition group">
+                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleSubNode('sub-2-1')">
+                            <h4 class="text-sm font-bold text-purple-300 flex items-center gap-2">
+                                <i class="fa-solid fa-comments text-xs text-purple-400"></i> Conceitos e Âmbitos
+                            </h4>
+                            <span class="text-xs text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-lg group-hover:bg-purple-500 group-hover:text-white transition">+ Detalhes</span>
+                        </div>
+                        <div id="sub-2-1" class="collapsible-content collapsed mt-3 text-xs text-slate-300 space-y-2 pl-4 border-l-2 border-purple-500/50">
+                            <p>• Modificações e omissões intencionais na geração de mensagens.</p>
+                            <p>• Presença de conteúdos ocultos, latentes e omitidos pelos modelos.</p>
+                            <p>• Uso ativo tanto por remetentes quanto por receptores humanos.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sub-nó B -->
+                    <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 hover:border-purple-500/40 transition group">
+                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleSubNode('sub-2-2')">
+                            <h4 class="text-sm font-bold text-purple-300 flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-xs text-purple-400"></i> Confiança Epistêmica
+                            </h4>
+                            <span class="text-xs text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-lg group-hover:bg-purple-500 group-hover:text-white transition">+ Detalhes</span>
+                        </div>
+                        <div id="sub-2-2" class="collapsible-content collapsed mt-3 text-xs text-slate-300 space-y-2 pl-4 border-l-2 border-purple-500/50">
+                            <p>• Atribuições de silêncio e imperfeições informacionais.</p>
+                            <p>• Análise profunda de incompreensão e viés algorítmico.</p>
+                            <p>• Perpetuação inadvertida da pressão de visões dominantes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sub-nó C -->
+                    <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 hover:border-purple-500/40 transition group">
+                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleSubNode('sub-2-3')">
+                            <h4 class="text-sm font-bold text-purple-300 flex items-center gap-2">
+                                <i class="fa-solid fa-triangle-exclamation text-xs text-purple-400"></i> Causas e Impactos Práticos
+                            </h4>
+                            <span class="text-xs text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-lg group-hover:bg-purple-500 group-hover:text-white transition">+ Detalhes</span>
+                        </div>
+                        <div id="sub-2-3" class="collapsible-content collapsed mt-3 text-xs text-slate-300 space-y-2 pl-4 border-l-2 border-purple-500/50">
+                            <p>• <strong>Omissão Renitente:</strong> Reforço epistêmico e exclusão sistêmica.</p>
+                            <p>• Dificuldade crescente na distinção entre autoria humana e de IA.</p>
+                            <p>• Iniquidades de transparência, divulgação e valoração de murmúrios técnicos.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Dica Interativa para o Aluno -->
+        <div class="mt-16 w-full max-w-xl bg-gradient-to-r from-indigo-950/60 to-purple-950/60 border border-indigo-500/30 p-5 rounded-2xl text-center shadow-lg">
+            <h4 class="text-sm font-bold text-indigo-300 flex items-center justify-center gap-2 mb-1">
+                <i class="fa-solid fa-lightbulb text-yellow-400"></i> Dica Pedagógica
+            </h4>
+            <p class="text-xs text-slate-300">
+                Este arquivo é totalmente autossuficiente. Você pode abri-lo direto no navegador ou incorporá-lo facilmente no seu **Notion** digitando <code class="bg-slate-800 px-1.5 py-0.5 rounded text-indigo-200">/embed</code>!
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-500 mt-12">
+        Criado para integração interativa no Notion • Baseado no material do NotebookLM
+    </footer>
+
+    <!-- Scripts de Interatividade -->
+    <script>
+        function toggleSection(id) {
+            const el = document.getElementById(id);
+            const btnIcon = document.getElementById('icon-btn-' + id);
+            
+            if (el.classList.contains('collapsed')) {
+                el.classList.remove('collapsed');
+                btnIcon.classList.remove('fa-plus');
+                btnIcon.classList.add('fa-minus');
+            } else {
+                el.classList.add('collapsed');
+                btnIcon.classList.remove('fa-minus');
+                btnIcon.classList.add('fa-plus');
+            }
+        }
+
+        function toggleSubNode(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('collapsed')) {
+                el.classList.remove('collapsed');
+            } else {
+                el.classList.add('collapsed');
+            }
+        }
+
+        function toggleNode(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (el.style.display === 'none') {
+                el.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                el.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        function expandAll() {
+            document.querySelectorAll('.collapsible-content').forEach(el => el.classList.remove('collapsed'));
+            document.querySelectorAll('[id^="icon-btn-"]').forEach(icon => {
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.collapsible-content').forEach(el => {
+                if(el.id !== 'central-info') el.classList.add('collapsed');
+            });
+            document.querySelectorAll('[id^="icon-btn-"]').forEach(icon => {
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+            });
+        }
+    </script>
+</body>
+</html>
