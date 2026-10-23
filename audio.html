@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ouvir Episódio no Spotify</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #181818;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #1db954; /* Cor verde do Spotify */
+        }
+        p {
+            font-size: 0.95rem;
+            color: #b3b3b3;
+            margin-bottom: 25px;
+        }
+        .player-wrapper {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ouça nosso Podcast</h1>
+        <p>Aperte o play abaixo para escutar o episódio diretamente no Spotify.</p>
+        
+        <div class="player-wrapper">
+            <!-- Player incorporado do Spotify para o link fornecido -->
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/2tk7B9SrTIOpITyESK0nhj?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </div>
+
+</body>
+</html>
